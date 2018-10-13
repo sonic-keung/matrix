@@ -3,7 +3,7 @@
 
 int main() {
 
-    std::cout << "initalize a 3 x 3 matrix" << std::endl;
+    std::cout << "initialize a 3 x 3 matrix" << std::endl;
     matrix matrix_test1{ 3 };
     std::cout << matrix_test1 << std::endl << "\n";
 

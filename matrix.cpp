@@ -45,7 +45,7 @@ matrix::matrix(double n[], int m) : row {m}, col{m} {
 }
 
 matrix::matrix(const matrix& m) {
-    this->matrices = m.matrices;
+    matrices = m.matrices;
 }
 
 void matrix::set_value(int r, int c, double newValue) {
@@ -118,6 +118,9 @@ matrix& matrix::operator=(matrix rhs) {
 }
 
 matrix& matrix::operator+=(const matrix& rhs) {
+    if (row != rhs.row || col != rhs.col) {
+        throw "matrix sizes are not the same";
+    }
     for (int i = 0; i < row * col; i++) {
         for (int j = 0; j < row * col; j++) {
             this->matrices[i * (row * col) + j] +=
@@ -128,6 +131,9 @@ matrix& matrix::operator+=(const matrix& rhs) {
 }
 
 matrix& matrix::operator-=(const matrix& rhs) {
+    if (row != rhs.row || col != rhs.col) {
+        throw "matrix sizes are not the same";
+    }
     for (int i = 0; i < row * col; i++) {
         for (int j = 0; j < row * col; j++) {
             this->matrices[i * (row * col) + j] -=
@@ -138,6 +144,9 @@ matrix& matrix::operator-=(const matrix& rhs) {
 }
 
 matrix& matrix::operator*=(const matrix& rhs) {
+    if (col != rhs.row) {
+        throw "# of columns of first operand not equal to # of rows of second operand";
+    }
     matrix tempMatrix(row, rhs.col);
 
     for (int i = 0; i < row; i++) {
@@ -149,7 +158,7 @@ matrix& matrix::operator*=(const matrix& rhs) {
             tempMatrix.set_value(i, j, sum);
         }
     }
-    this->matrices = tempMatrix.matrices;
+    matrices = tempMatrix.matrices;
     return *this;
 }
 

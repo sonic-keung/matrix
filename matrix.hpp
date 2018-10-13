@@ -1,7 +1,7 @@
 #include <iostream>
 
 class matrix {
-private:
+protected:
     double* matrices;
     int row;
     int col;
