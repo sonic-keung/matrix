@@ -1,17 +1,16 @@
 #include <iostream>
+#include <vector>
 
 class matrix {
 protected:
-    double* matrices;
-    int row;
-    int col;
+    std::vector<std::vector<double>> matrices;
     static constexpr double TOLERANCE = 0.001;
 
 public:
     matrix();
     matrix(int);
     matrix(int, int);
-    matrix(double[], int);
+    matrix(std::vector<double>);
     void set_value(int, int, double);
     double get_value(int, int) const;
     void clear();
