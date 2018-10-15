@@ -10,12 +10,7 @@ int main() {
     // open a file
     std::ifstream file;
     file.open("connectivity.txt");
-
-    // check if file is unavailable
-    if(!file) {
-        std::cout << "cannot open file" << std::endl;
-    }
-
+    
     // read the file
     int count;
     std::vector<double> a;
@@ -25,13 +20,9 @@ int main() {
 
     googlePageRank m(a);
 
-    std::cout << m << std::endl;
-
     m.importanceMatrix();
-    std::cout << m << std::endl;
 
     m.stochasticMatrix();
-    std::cout << m << std::endl;
 
     m.transitionMatrix();
 

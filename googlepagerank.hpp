@@ -3,7 +3,8 @@
 #include "matrix.hpp"
 
 class googlePageRank : public matrix {
-
+protected:
+    matrix matrixM;
 public:
     static constexpr double p = 0.85;
     googlePageRank() : matrix () {};
