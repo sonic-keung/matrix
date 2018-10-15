@@ -3,6 +3,7 @@
 #include "matrix.hpp"
 
 class googlePageRank : public matrix {
+    double sumOfRank = 0;
 
 public:
     static constexpr double p = 0.85;

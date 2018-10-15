@@ -78,22 +78,26 @@ void googlePageRank::markov() {
     matrix rank(matrices.size(), 1);
     matrix oldRank(matrices.size());
 
-    double rankSum = 0;
+    while(oldRank != rank){
+        oldRank = rank;
+        rank = matrixM * rank;
+    }
 
-    for(int i = 0; i < matrices.size(); i++){
-        for(int j = 0; j < matrices[i].size(); j++){
+    for(int i = 0; i < rank.get_row(); i++){
+        for(int j = 0; j < rank.get_col(); j++){
+            sumOfRank += rank.get_value(i, j);
             rank.set_value(i, j, 1);
         }
     }
     std::cout << rank << std::endl;
 
-    for (int i = 0; i < matrices.size(); i++) {
-        for (int j = 0; j < matrices.size(); j++) {
-            double newVal = (rank.get_value(i, j) / rankSum) * 100;
-            rank.set_value(i, j, rank.get_value(i, j));
+    for(int i = 0; i < rank.get_row(); i++){
+        for(int j = 0; j < rank.get_col(); j++){
+            double newVal = (rank.get_value(i, j) / sumOfRank) * 100;
+            rank.set_value(i, j, newVal);
         }
     }
-    std::cout << rank << std::endl;
+    matrices = rank.getMatrix();
 }
 
 // displays the rank matrix

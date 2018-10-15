@@ -5,6 +5,8 @@ class matrix {
 protected:
     std::vector<std::vector<double>> matrices;
     static constexpr double TOLERANCE = 0.001;
+    int row;
+    int col;
 
 public:
     matrix();
@@ -32,5 +34,9 @@ public:
     friend matrix operator+(matrix, const matrix&);
     friend matrix operator-(matrix, const matrix&);
     friend matrix operator*(matrix, const matrix&);
+
+    int get_row();
+    int get_col();
+    std::vector<std::vector<double>> getMatrix();
 
 };

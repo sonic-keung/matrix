@@ -7,28 +7,28 @@
 #include "matrix.hpp"
 
 // create a 1 by 1 matrix
-matrix::matrix() {
-    matrices = {1, std::vector<double>(1, 0.0)};
+matrix::matrix() : row{1}, col{1}{
+    matrices = {(unsigned long)row, std::vector<double>(col, 0.0)};
     clear();
 }
 
 // accepts size of matrix and set all values to zero
-matrix::matrix(int n) {
+matrix::matrix(int n) : row {n}, col {n} {
     if (n <= 0) {
         throw "Error: positive integers expected";
     }
 
-    matrices = {(unsigned long) n, std::vector<double>(n, 0.0)};
+    matrices = {(unsigned long) row, std::vector<double>(col, 0.0)};
     clear();
 }
 
 // create matrix to be r x c
-matrix::matrix(int r, int c) {
+matrix::matrix(int r, int c) : row{r}, col{c} {
     if (r <= 0 || c <= 0) {
         throw "Error: row and column positive";
     }
 
-    matrices = {(unsigned long)r, std::vector<double>(c, 0.0)};
+    matrices = {(unsigned long)row, std::vector<double>(col, 0.0)};
     clear();
 }
 
@@ -222,4 +222,17 @@ matrix operator-(matrix lhs, const matrix& rhs) {
 matrix operator*(matrix lhs, const matrix& rhs) {
     lhs *= rhs;
     return lhs;
+}
+
+
+int matrix::get_row() {
+    return row;
+}
+
+int matrix::get_col() {
+    return col;
+}
+
+std::vector<std::vector<double>> matrix::getMatrix() {
+    return matrices;
 }
