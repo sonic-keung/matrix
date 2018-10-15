@@ -42,9 +42,9 @@ void googlePageRank::stochasticMatrix() {
 
 // adds (1- 0.85) multiplied by matrixQ, where Q's every element is 1/n
 void googlePageRank::transitionMatrix() {
-    matrix matrixQ(matrices.size());
-    matrix matrixM(matrices.size());
-    matrix matrixS(matrices.size());
+    matrix matrixQ((int) matrices.size());
+    matrix matrixM((int) matrices.size());
+    matrix matrixS((int) matrices.size());
 
     for(int i = 0; i < matrices.size(); i++){
         for(int j = 0; j < matrices[i].size(); j++){
@@ -74,8 +74,8 @@ void googlePageRank::transitionMatrix() {
 
 // markov process
 void googlePageRank::markov() {
-    matrix matrixM(matrices.size());
-    matrix rank(matrices.size(), 1);
+    matrix matrixM((int) matrices.size());
+    matrix rank((int) matrices.size(), 1);
 
     while (rank != matrixM * rank) {
         rank = matrixM * rank;
@@ -102,16 +102,14 @@ void googlePageRank::markov() {
 }
 
 // displays the rank matrix
-// use ascii values 65
 void googlePageRank::printMatrix(const std::vector<double> &arr) {
-    int asciiCharacters = 65;
+    char c = 'A';
     for(int i = 0; i < matrices.size(); i++) {
         for(int j = 0; j < matrices[i].size(); j++) {
-            std::cout << "Page " << (char) asciiCharacters << ": " << std::fixed
+            std::cout << "Page " << c << ": " << std::fixed
                       << std::setprecision(2) << matrices[i][j] * 100 << "%" << std::endl;
-            asciiCharacters++;
+            c++;
         }
-        std::cout << std::endl;
     }
 }
 

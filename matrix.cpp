@@ -224,7 +224,6 @@ matrix operator*(matrix lhs, const matrix& rhs) {
     return lhs;
 }
 
-
 int matrix::get_row() {
     return row;
 }
