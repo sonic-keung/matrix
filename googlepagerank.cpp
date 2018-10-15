@@ -76,28 +76,29 @@ void googlePageRank::transitionMatrix() {
 void googlePageRank::markov() {
     matrix matrixM(matrices.size());
     matrix rank(matrices.size(), 1);
-    matrix oldRank(matrices.size());
 
-    while(oldRank != rank){
-        oldRank = rank;
+    while (rank != matrixM * rank) {
         rank = matrixM * rank;
     }
 
     for(int i = 0; i < rank.get_row(); i++){
         for(int j = 0; j < rank.get_col(); j++){
-            sumOfRank += rank.get_value(i, j);
             rank.set_value(i, j, 1);
         }
     }
     std::cout << rank << std::endl;
 
+    double sum = 0;
     for(int i = 0; i < rank.get_row(); i++){
         for(int j = 0; j < rank.get_col(); j++){
-            double newVal = (rank.get_value(i, j) / sumOfRank) * 100;
-            rank.set_value(i, j, newVal);
+            sum += (rank.get_value(i, j));
+        }
+        for (int j = 0; j < rank.get_col(); j++) {
+            rank.set_value(i, j, rank.get_value(i, j) / sum);
         }
     }
     matrices = rank.getMatrix();
+    std::cout << rank << std::endl;
 }
 
 // displays the rank matrix
