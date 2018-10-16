@@ -14,18 +14,27 @@ matrix::matrix() : row{1}, col{1}{
 
 // accepts size of matrix and set all values to zero
 matrix::matrix(int n) : row {n}, col {n} {
-    if (n <= 0) {
-        throw "Error: positive integers expected";
-    }
+    try {
+        if (n <= 0)
+            throw std::invalid_argument("Error: positive integers expected");
 
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
+    }
     matrices = {(unsigned long) row, std::vector<double>(col, 0.0)};
     clear();
 }
 
 // create matrix to be r x c
 matrix::matrix(int r, int c) : row{r}, col{c} {
-    if (r <= 0 || c <= 0) {
-        throw "Error: row and column positive";
+    try {
+        if (r <= 0 || c <= 0)
+            throw std::invalid_argument("Error: row and column positive");
+
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
     }
 
     matrices = {(unsigned long)row, std::vector<double>(col, 0.0)};
@@ -34,8 +43,13 @@ matrix::matrix(int r, int c) : row{r}, col{c} {
 
 // create matrix using double vector
 matrix::matrix(std::vector<double> m) {
-    if (sqrt(m.size()) != sqrt(m.size())) {
-        throw "error";
+    try {
+        if (sqrt(m.size()) != sqrt(m.size()))
+            throw std::invalid_argument("Error: size of the array does not have an integer square root ");
+
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
     }
 
     matrices = {(unsigned long) sqrt(m.size()), std::vector<double>(sqrt(m.size()), 0.0)};
@@ -55,16 +69,26 @@ matrix::matrix(const matrix& m) {
 
 // set the value of each matrix
 void matrix::set_value(int r, int c, double newValue) {
-    if (r < 0 || r >= matrices.size()) {
-        throw "row and column must be less than 0";
+    try {
+        if (r < 0 || r >= matrices.size() || c < 0 || c >= matrices.size())
+            throw std::invalid_argument("Error: integers are negative or too large ");
+
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
     }
     matrices[r][c] = newValue;
 }
 
 // get the value of matrix
 double matrix::get_value(int r, int c) const {
-    if (r < 0 || c < 0) {
-        throw "row or column must be less than 0";
+    try {
+        if (r < 0 || r >= matrices.size() || c < 0 || c >= matrices.size())
+            throw std::invalid_argument("Error: integers are negative or too large ");
+
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
     }
     return matrices[r][c];
 }
@@ -129,8 +153,13 @@ matrix& matrix::operator=(matrix rhs) {
 
 // overloaded assignment operator
 matrix& matrix::operator+=(const matrix& rhs) {
-    if (matrices.size() != rhs.matrices.size()) {
-        throw "matrix sizes are not the same";
+    try {
+        if (matrices.size() != rhs.matrices.size())
+            throw std::invalid_argument("Error: operands passed to the operator are not same size");
+
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
     }
     for (int i = 0; i < matrices.size(); i++) {
         for (int j = 0; j < rhs.matrices[i].size(); j++) {
@@ -142,9 +171,15 @@ matrix& matrix::operator+=(const matrix& rhs) {
 
 // overloaded assignment operator
 matrix& matrix::operator-=(const matrix& rhs) {
-    if (matrices.size() != rhs.matrices.size()) {
-        throw "matrix sizes are not the same";
+    try {
+        if (matrices.size() != rhs.matrices.size())
+            throw std::invalid_argument("Error: operands passed to the operator are not same size");
+
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
     }
+
     for (int i = 0; i < matrices.size(); i++) {
         for (int j = 0; j < rhs.matrices[i].size(); j++) {
             matrices[i][j] -= rhs.matrices[i][j];
@@ -155,8 +190,13 @@ matrix& matrix::operator-=(const matrix& rhs) {
 
 // overloaded assignment operator
 matrix& matrix::operator*=(const matrix& rhs) {
-    if (matrices[0].size() != rhs.matrices.size()) {
-        throw "# of columns of first operand not equal to # of rows of second operand";
+    try {
+        if (matrices[0].size() != rhs.matrices.size())
+            throw std::invalid_argument("Error: # of columns of first operand not equal to # of rows of second operand");
+
+    } catch (const std::exception& e){
+        std::cerr << e.what() << '\n';
+        exit(EXIT_FAILURE);
     }
     matrix tempMatrix(matrices.size(), rhs.matrices.size());
 
